@@ -1,4 +1,4 @@
-package com.weatherappsample.ui
+package com.weather.ui
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost

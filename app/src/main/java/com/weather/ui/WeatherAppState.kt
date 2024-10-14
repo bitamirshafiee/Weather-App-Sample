@@ -1,4 +1,4 @@
-package com.weatherappsample.ui
+package com.weather.ui
 
 import android.content.Context
 import androidx.compose.runtime.Composable
