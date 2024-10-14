@@ -1,4 +1,4 @@
-package com.weatherappsample
+package com.weatherappsample.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
