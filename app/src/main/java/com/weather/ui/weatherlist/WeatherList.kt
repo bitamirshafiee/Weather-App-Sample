@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.weather.R
 
 @Composable
-fun WeatherList() {
+fun WeatherList(viewModel: WeatherListViewModel = WeatherListViewModel()) {
 
 }
 
