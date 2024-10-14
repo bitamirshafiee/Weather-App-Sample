@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.weatherappsample"
+    namespace = "com.weather"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.weatherappsample"
+        applicationId = "com.weather"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.navigation.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
