@@ -3,6 +3,7 @@ package com.weather.data.model
 import com.google.gson.annotations.SerializedName
 
 data class WeatherResponse(
+    @SerializedName("name") val cityName: String,
     @SerializedName("weather") val weather: List<Weather>,
     @SerializedName("main") val weatherStatistic: WeatherStatistic
 )
@@ -17,7 +18,22 @@ data class WeatherStatistic(
 )
 
 fun getDefaultWeatherResponse() = WeatherResponse(
+    cityName = "City",
     weather = listOf(
         Weather(condition = "", icon = "")
     ), WeatherStatistic(temperature = 9.9, feelsLikeTemperature = 7.66)
+)
+
+data class WeatherData(
+    val cityName: String,
+    val currentTemperature: Double,
+    val feelsLikeTemperature: Double,
+    val iconUrl: String
+)
+
+fun getDefaultWeatherData() = WeatherData(
+    cityName = "City",
+    currentTemperature = 1.1,
+    feelsLikeTemperature = 5.4,
+    iconUrl = "http://10d"
 )

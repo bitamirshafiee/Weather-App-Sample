@@ -1,6 +1,5 @@
 package com.weather.ui.weatherlist
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,64 +13,64 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil3.compose.AsyncImage
 import com.weather.R
-import com.weather.data.model.WeatherResponse
-import com.weather.data.model.getDefaultWeatherResponse
+import com.weather.data.model.WeatherData
+import com.weather.data.model.getDefaultWeatherData
 
 @Composable
 fun WeatherList(viewModel: WeatherListViewModel) {
 
-    val currentWeatherList by viewModel.weatherResult.collectAsStateWithLifecycle()
+    val weatherDataList by viewModel.weatherResult.collectAsStateWithLifecycle()
     LazyColumn {
-        items(items = currentWeatherList) { currentWeather: WeatherResponse ->
-            WeatherItem(currentWeather = currentWeather)
+        items(items = weatherDataList) { weatherData: WeatherData ->
+            WeatherItem(weatherData = weatherData)
         }
     }
 
 }
 
 @Composable
-fun WeatherItem(modifier: Modifier = Modifier, currentWeather: WeatherResponse) {
+fun WeatherItem(modifier: Modifier = Modifier, weatherData: WeatherData) {
     Row(
         modifier = modifier
             .fillMaxWidth()
             .padding(8.dp), verticalAlignment = Alignment.CenterVertically
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.ic_launcher_background),
-            modifier = Modifier
-                .size(80.dp),
-            contentScale = ContentScale.FillBounds,
-            contentDescription = null
+        AsyncImage(
+            model = weatherData.iconUrl,
+            contentDescription = null,
+            modifier = Modifier.size(50.dp)
         )
         Text(
             modifier = Modifier.padding(horizontal = 8.dp),
-            text = currentWeather.weather.get(0).condition,
+            text = weatherData.cityName,
             overflow = TextOverflow.Ellipsis,
             fontWeight = FontWeight.Bold,
             style = MaterialTheme.typography.titleLarge
         )
         Column(modifier = Modifier.weight(1f)) {
-            Temperatures()
+            Temperatures(weatherData)
         }
     }
 }
 
 @Composable
-private fun Temperatures() {
+private fun Temperatures(weatherData: WeatherData) {
     Text(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp),
-        text = "18",
+        text = stringResource(
+            id = R.string.str_current_temperature, weatherData.currentTemperature
+        ),
         overflow = TextOverflow.Ellipsis,
         style = MaterialTheme.typography.titleLarge,
         textAlign = TextAlign.Center
@@ -80,7 +79,10 @@ private fun Temperatures() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp),
-        text = "18",
+        text = stringResource(
+            id = R.string.str_feels_like,
+            weatherData.feelsLikeTemperature
+        ),
         overflow = TextOverflow.Ellipsis,
         style = MaterialTheme.typography.titleLarge,
         textAlign = TextAlign.Center
@@ -90,6 +92,6 @@ private fun Temperatures() {
 @Composable
 @Preview
 fun WeatherItemPreview() {
-    WeatherItem(currentWeather = getDefaultWeatherResponse())
+    WeatherItem(weatherData = getDefaultWeatherData())
 }
 

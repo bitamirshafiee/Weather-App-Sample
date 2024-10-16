@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Weather App</string>
+    <string name="str_current_temperature">%.0f\u00B0</string>
+    <string name="str_feels_like">Feels like %.0f\u00B0</string>
 </resources>
