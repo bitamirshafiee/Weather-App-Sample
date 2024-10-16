@@ -5,14 +5,17 @@ import androidx.lifecycle.viewModelScope
 import com.weather.data.model.WeatherResponse
 import com.weather.data.model.getDefaultWeatherResponse
 import com.weather.data.repository.WeatherRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-class WeatherListViewModel(private val repository: WeatherRepository) : ViewModel() {
+@HiltViewModel
+class WeatherListViewModel @Inject constructor(private val repository: WeatherRepository) : ViewModel() {
 
     private val _isInProgress = MutableStateFlow(true)
     val isInProgress: StateFlow<Boolean> = _isInProgress
@@ -39,10 +42,6 @@ class WeatherListViewModel(private val repository: WeatherRepository) : ViewMode
             val result = repository.getCurrentWeathersByCityNames()
             _weatherResult.value = result.awaitAll()
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
     }
 
 }

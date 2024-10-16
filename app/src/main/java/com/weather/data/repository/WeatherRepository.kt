@@ -5,12 +5,13 @@ import com.weather.data.service.ServiceProvider
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import javax.inject.Inject
 
 abstract class WeatherRepository {
     abstract suspend fun getCurrentWeathersByCityNames(): List<Deferred<WeatherResponse>>
 }
 
-class WeatherRepositoryImpl(serviceProvider: ServiceProvider) : WeatherRepository() {
+class WeatherRepositoryImpl @Inject constructor(serviceProvider: ServiceProvider) : WeatherRepository() {
 
     private val weatherService = serviceProvider.weatherService
 

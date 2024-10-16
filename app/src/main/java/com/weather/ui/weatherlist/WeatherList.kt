@@ -6,9 +6,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -18,15 +21,25 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.weather.R
+import com.weather.data.model.WeatherResponse
+import com.weather.data.model.getDefaultWeatherResponse
 
 @Composable
-fun WeatherList(viewModel: WeatherListViewModel = WeatherListViewModel()) {
+fun WeatherList(viewModel: WeatherListViewModel) {
+
+    val currentWeatherList by viewModel.weatherResult.collectAsStateWithLifecycle()
+    LazyColumn {
+        items(items = currentWeatherList) { currentWeather: WeatherResponse ->
+            WeatherItem(currentWeather = currentWeather)
+        }
+    }
 
 }
 
 @Composable
-fun WeatherItem(modifier: Modifier = Modifier) {
+fun WeatherItem(modifier: Modifier = Modifier, currentWeather: WeatherResponse) {
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -41,7 +54,7 @@ fun WeatherItem(modifier: Modifier = Modifier) {
         )
         Text(
             modifier = Modifier.padding(horizontal = 8.dp),
-            text = "Stockholm",
+            text = currentWeather.weather.get(0).condition,
             overflow = TextOverflow.Ellipsis,
             fontWeight = FontWeight.Bold,
             style = MaterialTheme.typography.titleLarge
@@ -77,6 +90,6 @@ private fun Temperatures() {
 @Composable
 @Preview
 fun WeatherItemPreview() {
-    WeatherItem()
+    WeatherItem(currentWeather = getDefaultWeatherResponse())
 }
 
