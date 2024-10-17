@@ -2,6 +2,7 @@ package com.weather.ext
 
 import com.weather.const.IMAGE_URL
 
+// easy creating mocks when testing
 fun getCityNames() =
     listOf("Gothenburg", "Stockholm", "Mountain View", "London", "New York", "Berlin")
 
