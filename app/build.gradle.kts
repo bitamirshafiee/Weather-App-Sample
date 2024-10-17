@@ -9,6 +9,8 @@ android {
     namespace = "com.weather"
     compileSdk = 34
 
+    //Generate keystore and store it in file and access it during creating a deployable android file
+
     defaultConfig {
         applicationId = "com.weather"
         minSdk = 24
