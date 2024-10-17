@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Weather App</string>
+    <string name="str_current_temperature">%.0f\u00B0</string>
+    <string name="str_feels_like">Feels like %.0f\u00B0</string>
+    <string name="str_error_unauthorized">unAuthorized</string>
+    <string name="str_error_city_not_found">city not found</string>
+    <string name="str_error_format">Error in format</string>
+    <string name="str_error_EOF">Error in data conversion</string>
+    <string name="str_error_io">No Internet</string>
+    <string name="str_error_json_syntax">Error in data conversion</string>
+    <string name="str_error_undefined">Error happened</string>
+    <string name="str_ok">ok</string>
 </resources>
