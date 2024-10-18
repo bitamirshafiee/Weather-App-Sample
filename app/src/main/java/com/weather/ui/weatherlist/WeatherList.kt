@@ -1,6 +1,7 @@
 package com.weather.ui.weatherlist
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
@@ -59,8 +59,7 @@ fun WeatherList(viewModel: WeatherListViewModel) {
         ) {
 
             Box(modifier = Modifier) {
-                if (isProgressVisible)
-                    CircularProgress()
+                if (isProgressVisible) CircularProgress()
                 else WeatherList(weatherDataList)
             }
         }
@@ -85,44 +84,43 @@ fun WeatherItem(modifier: Modifier = Modifier, weatherData: WeatherData) {
             containerColor = MaterialTheme.colorScheme.surface,
         ),
         border = BorderStroke(1.dp, Color.Black),
-        modifier = Modifier.fillMaxWidth().padding(4.dp)
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(4.dp)
     ) {
-
-        Row(
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(8.dp), verticalAlignment = Alignment.CenterVertically
-        ) {
-            AsyncImage(
-                model = weatherData.iconUrl,
-                contentDescription = null,
-                modifier = Modifier.size(50.dp)
-            )
-            Column(modifier = Modifier.fillMaxWidth()) {
-                Text(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp),
-                    text = weatherData.cityName,
-                    overflow = TextOverflow.Ellipsis,
-                    fontWeight = FontWeight.Bold,
-                    style = MaterialTheme.typography.titleLarge,
-                    textAlign = TextAlign.Center
-                )
-                Temperatures(weatherData)
-            }
+        Column(modifier = modifier.fillMaxWidth()) {
+            CityName(weatherData = weatherData)
+            WeatherCondition(weatherData = weatherData)
         }
     }
 }
 
 @Composable
-private fun Temperatures(weatherData: WeatherData) {
-    Row {
+private fun CityName(modifier: Modifier = Modifier, weatherData: WeatherData) {
+    Text(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+        text = weatherData.cityName,
+        overflow = TextOverflow.Ellipsis,
+        fontWeight = FontWeight.Bold,
+        style = MaterialTheme.typography.titleLarge,
+        textAlign = TextAlign.Center
+    )
+}
+
+@Composable
+private fun WeatherCondition(modifier: Modifier = Modifier, weatherData: WeatherData) {
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
+        AsyncImage(
+            model = weatherData.iconUrl, contentDescription = null, modifier = Modifier.size(50.dp)
+        )
         Text(
-            modifier = Modifier
-                .padding(horizontal = 8.dp)
-                .fillMaxWidth()
-                .weight(1f),
+            modifier = Modifier.padding(horizontal = 8.dp),
             text = stringResource(
                 id = R.string.str_current_temperature, weatherData.currentTemperature
             ),
@@ -131,13 +129,9 @@ private fun Temperatures(weatherData: WeatherData) {
             textAlign = TextAlign.Center
         )
         Text(
-            modifier = Modifier
-                .padding(horizontal = 8.dp)
-                .fillMaxWidth()
-                .weight(1f),
+            modifier = Modifier.padding(horizontal = 8.dp),
             text = stringResource(
-                id = R.string.str_feels_like,
-                weatherData.feelsLikeTemperature
+                id = R.string.str_feels_like, weatherData.feelsLikeTemperature
             ),
             overflow = TextOverflow.Ellipsis,
             style = MaterialTheme.typography.titleMedium,

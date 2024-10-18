@@ -14,7 +14,7 @@ fun rememberWeatherAppState(
 ) = remember(navController, context) {
     WeatherAppState(navController)
 }
-
+    //in case of navigation between screens
 class WeatherAppState(
     val navController: NavHostController
 ) {
