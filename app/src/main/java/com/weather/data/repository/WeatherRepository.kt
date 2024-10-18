@@ -21,9 +21,9 @@ class WeatherRepositoryImpl @Inject constructor(serviceProvider: ServiceProvider
     //it would be better to use city ids instead of the city names and also we can have a json file of
     // all the city ids in the project and search for them in th file and then make the request
     override suspend fun getCurrentWeathersByCityNames(cities: List<String>): List<Deferred<WeatherResponse>> =
-        //in case of an exception with just one of the api calls all the other coroutines will be canceled too,
+    //in case of an exception with just one of the api calls all the other coroutines will be canceled too,
         //maybe we can use a supervisorScope so all the coroutines will not be cancelled by one coroutine failure
-        supervisorScope {
+        coroutineScope {
             cities.map {
                 async(Dispatchers.IO) { weatherService.getWeather(it) }
             }

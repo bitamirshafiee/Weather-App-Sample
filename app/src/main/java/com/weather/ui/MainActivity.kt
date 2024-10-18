@@ -3,10 +3,9 @@ package com.weather.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import com.weather.ui.theme.WeatherTheme
 import dagger.hilt.android.AndroidEntryPoint
-//TODO README
+
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

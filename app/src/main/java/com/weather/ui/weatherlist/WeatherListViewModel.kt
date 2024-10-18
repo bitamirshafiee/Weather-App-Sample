@@ -47,6 +47,8 @@ class WeatherListViewModel @Inject constructor(private val repository: WeatherRe
 
     //city names are passed here in viewmodel which in a real world app could be something that
     // will be gotten from the UI and it would be easier to test too
+    //We can also create a sealed NetworkResult class with either successful or Exception objects
+    // and use it for sending the data to viewmodel which is more cleaner and understandable
     private fun getWeathers(cities: List<String>) {
         _isInProgress.value = true
         viewModelScope.launch(exceptionHandler) {
